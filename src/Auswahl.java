@@ -10,7 +10,9 @@ public class Auswahl extends JFrame {
 
     public Auswahl() {
         setTitle("WordWizard");
-        setSize(600, 400);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(screenSize.width, screenSize.height);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1,3));
 
