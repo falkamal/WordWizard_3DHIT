@@ -9,6 +9,7 @@ public class Home extends JFrame {
     private JPanel auswahlpanel;
     JLabel titel;
     JButton modus, auswahl, save,close;
+
     public Home() {
         setTitle("WordWizard");
         setSize(600, 400);
@@ -17,6 +18,7 @@ public class Home extends JFrame {
 
         // Menüleiste
         menuBar = new JMenuBar();
+        menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
         viewMenu = new JMenu("View");
         menuBar.add(homeMenu);
@@ -74,6 +76,9 @@ public class Home extends JFrame {
         add(auswahlpanel, BorderLayout.CENTER);
         setVisible(true);
 
+    }
+    public static void main(String[] args) {
+        Home app = new Home();
     }
 
 }
