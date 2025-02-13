@@ -8,19 +8,24 @@ public class Home extends JFrame {
     private JMenu homeMenu,viewMenu;
     private JPanel auswahlpanel;
     JLabel titel;
-    JButton modus, auswahl, save,close;
+    JButton  auswahl, save,close;
+    JTextField modus;
+    Controller controller;
 
-    public Home() {
+    public Home(Controller controller) {
+        this.controller = controller;
         setTitle("WordWizard");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width, screenSize.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+
 
         // Menüleiste
         menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
+        homeMenu.setActionCommand("Home");
+        homeMenu.addActionListener(controller);
         viewMenu = new JMenu("View");
         menuBar.add(homeMenu);
         menuBar.add(viewMenu);
@@ -36,14 +41,18 @@ public class Home extends JFrame {
         titel.setForeground(Color.decode("#2F4F4F"));
         titel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        modus = new JButton("SPIELMODUS");
+        modus = new JTextField("SPIELMODUS");
+        modus.setEditable(false);
         modus.setBackground(Color.WHITE);
+        modus.setHorizontalAlignment(SwingConstants.CENTER);
         modus.setFont(new Font("Arial", Font.BOLD, 20));
         modus.setPreferredSize(new Dimension(400, 100));
         modus.setMaximumSize(new Dimension(400, 100));
         modus.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         auswahl = new JButton("AUSWAHL");
+        auswahl.setActionCommand("Auswahl");
+        auswahl.addActionListener(controller);
         auswahl.setFont(new Font("Arial", Font.BOLD, 20));
         auswahl.setBackground(Color.WHITE);
         auswahl.setPreferredSize(new Dimension(400, 100));
@@ -58,6 +67,8 @@ public class Home extends JFrame {
         save.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         close = new JButton("BEENDEN");
+        close.setActionCommand("Beenden");
+        close.addActionListener(controller);
         close.setFont(new Font("Arial", Font.BOLD, 20));
         close.setBackground(Color.WHITE);
         close.setPreferredSize(new Dimension(400, 100));
@@ -78,8 +89,6 @@ public class Home extends JFrame {
         setVisible(true);
 
     }
-    public static void main(String[] args) {
-        Home app = new Home();
-    }
+
 
 }

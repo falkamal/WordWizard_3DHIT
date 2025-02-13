@@ -7,19 +7,26 @@ public class Auswahl extends JFrame {
     private JButton quizButton, vokButton, memoryButton;
     private JMenuBar menuBar;
     private JMenu homeMenu;
+    private JMenuItem homeMenuItem;
+    private Controller controller;
 
-    public Auswahl() {
+    public Auswahl(Controller controller) {
         setTitle("WordWizard");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width, screenSize.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1,3));
+        this.controller = controller;
 
         //Menübar
         menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
+
+        homeMenuItem = new JMenuItem("Zur Startseite");
+        homeMenuItem.setActionCommand("Home");
+        homeMenuItem.addActionListener(controller);
+        homeMenu.add(homeMenuItem);
+
         menuBar.add(homeMenu);
         setJMenuBar(menuBar);
 
@@ -35,6 +42,8 @@ public class Auswahl extends JFrame {
         quizPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
 
         quizButton = new JButton("Spielen");
+        quizButton.setActionCommand("Quiz");
+        quizButton.addActionListener(controller);
         quizButton.setBackground(Color.WHITE);
         quizButton.setPreferredSize(new Dimension(100, 40));
         quizButton.setMaximumSize(new Dimension(100, 40));
@@ -99,8 +108,5 @@ public class Auswahl extends JFrame {
         add(vokabelPanel);
         add(memoryPanel);
         setVisible(true);
-    }
-    public static void main(String[] args) {
-        Auswahl app = new Auswahl();
     }
 }
