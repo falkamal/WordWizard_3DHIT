@@ -41,14 +41,14 @@ public class Home extends JFrame {
         titel.setForeground(Color.decode("#2F4F4F"));
         titel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        modus = new JTextField("SPIELMODUS");
+        /*modus = new JTextField("SPIELMODUS");
         modus.setEditable(false);
         modus.setBackground(Color.WHITE);
         modus.setHorizontalAlignment(SwingConstants.CENTER);
         modus.setFont(new Font("Arial", Font.BOLD, 20));
         modus.setPreferredSize(new Dimension(400, 100));
         modus.setMaximumSize(new Dimension(400, 100));
-        modus.setAlignmentX(Component.CENTER_ALIGNMENT);
+        modus.setAlignmentX(Component.CENTER_ALIGNMENT);*/
 
         auswahl = new JButton("AUSWAHL");
         auswahl.setActionCommand("Auswahl");
@@ -78,7 +78,7 @@ public class Home extends JFrame {
         auswahlpanel.add(Box.createRigidArea(new Dimension(0, 100))); // Abstand zum nächsten Element
         auswahlpanel.add(titel);
         auswahlpanel.add(Box.createRigidArea(new Dimension(0, 50))); // Abstand zum nächsten Element
-        auswahlpanel.add(modus);
+        //auswahlpanel.add(modus);
         auswahlpanel.add(Box.createRigidArea(new Dimension(0, 20))); // Abstand zwischen den Buttons
         auswahlpanel.add(auswahl);
         auswahlpanel.add(Box.createRigidArea(new Dimension(0, 20))); // Abstand zwischen den Buttons
