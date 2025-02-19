@@ -29,6 +29,16 @@ public class Controller implements ActionListener {
             frame.setVisible(false);
             frame = new Quiz(this);
             frame.setVisible(true);
+
+        }else if(ac.equals("Vocab")) {
+            frame.setVisible(false);
+            frame = new Vocab();
+            frame.setVisible(true);
+
+        }else if(ac.equals("Memory")) {
+            frame.setVisible(false);
+            frame = new Memory();
+            frame.setVisible(true);
         }
     }
 

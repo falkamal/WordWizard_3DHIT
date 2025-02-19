@@ -1,86 +1,65 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Quiz extends JFrame {
+public class Memory extends JFrame {
 
     private JMenuBar menuBar;
     private JMenu homeMenu;
-    private JMenuItem homeMenuItem;
-    private JPanel überschriftPanel, quizPanel, ergebnisPanel, buttonPanel;
-    private JTextField frage = new JTextField("Frage 1");
-    private JTextField antwort = new JTextField();
+    private JPanel überschriftPanel, vocabPanel, ergebnisPanel, buttonPanel;
     private JLabel richtig, falsch;
-    private JButton edit,einfach,schwer,again;
-    private Controller controller;
+    private JButton edit, einfach, schwer, again, next;
     private int r = 0, f = 0;
 
-    public Quiz(Controller controller) {
-        setTitle("WordWizard");
+    public Memory() {
+        setTitle("WordWizard - Vokabeltest");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        this.controller = controller;
-
         menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
-
-        homeMenuItem = new JMenuItem("Zur Startseite");
-        homeMenuItem.setActionCommand("Home");
-        homeMenuItem.addActionListener(controller);
-        homeMenu.add(homeMenuItem);
-
         menuBar.add(homeMenu);
         setJMenuBar(menuBar);
 
         überschriftPanel = new JPanel();
         überschriftPanel.setBackground(Color.WHITE);
-        JLabel überschrift = new JLabel("Quiz-Modus");
+        JLabel überschrift = new JLabel("Vokabeltest-Modus");
         überschrift.setFont(new Font("Arial", Font.BOLD, 30));
         überschriftPanel.add(überschrift);
 
-        //Eingabefelder
-        quizPanel = new JPanel();
-        quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.X_AXIS));
-        quizPanel.setBackground(Color.decode("#C6E2FF"));
+        // Vokabelkarten
+        vocabPanel = new JPanel();
+        vocabPanel.setLayout(new GridLayout(3, 2, 20, 20));
+        vocabPanel.setBackground(Color.decode("#C6E2FF"));
 
-        frage.setEditable(false);
-        frage.setBackground(Color.WHITE);
-        frage.setFont(new Font("Arial", Font.BOLD, 30));
-        frage.setHorizontalAlignment(SwingConstants.CENTER);
-        frage.setPreferredSize(new Dimension(getWidth()/3, 150));
-        frage.setMaximumSize(new Dimension(getWidth()/3, 150));
-        frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
+        for (int i = 0; i < 6; i++) {
+            JPanel card = new JPanel();
+            card.setLayout(new BorderLayout());
+            card.setBackground(Color.WHITE);
+            JLabel image = new JLabel("Bild"); // Platzhalter für Bild
+            image.setHorizontalAlignment(SwingConstants.CENTER);
+            JLabel word = new JLabel("Wort"); // Platzhalter für Wort
+            word.setHorizontalAlignment(SwingConstants.CENTER);
+            card.add(image, BorderLayout.CENTER);
+            card.add(word, BorderLayout.SOUTH);
+            vocabPanel.add(card);
+        }
 
-        antwort.setFont(new Font("Arial", Font.BOLD, 30));
-        antwort.setHorizontalAlignment(SwingConstants.CENTER);
-        antwort.setPreferredSize(new Dimension(getWidth()/3, 150));
-        antwort.setMaximumSize(new Dimension(getWidth()/3, 150));
-        antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
-
-        quizPanel.add(Box.createHorizontalGlue());
-        quizPanel.add(frage);
-        quizPanel.add(Box.createRigidArea(new Dimension(80, 0)));
-        quizPanel.add(antwort);
-        quizPanel.add(Box.createHorizontalGlue());
-
-        //Ergebnise
+        // Ergebnisse
         ergebnisPanel = new JPanel();
         ergebnisPanel.setLayout(new BoxLayout(ergebnisPanel, BoxLayout.Y_AXIS));
         ergebnisPanel.setBackground(Color.decode("#C6E2FF"));
-        ergebnisPanel.setPreferredSize(new Dimension(getWidth(), getHeight()/2));
-        ergebnisPanel.setMinimumSize(new Dimension(getWidth(), getHeight()/2));
-        //Richitge und Falsche Antworten
+
         richtig = new JLabel("Richtig: " + r);
         richtig.setFont(new Font("Arial", Font.BOLD, 20));
         richtig.setAlignmentX(Component.CENTER_ALIGNMENT);
         falsch = new JLabel("Falsch: " + f);
         falsch.setFont(new Font("Arial", Font.BOLD, 20));
         falsch.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //Panel für alle Buttons
+
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setBackground(Color.decode("#C6E2FF"));
@@ -101,10 +80,15 @@ public class Quiz extends JFrame {
         again.setFont(new Font("Arial", Font.BOLD, 20));
         again.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        next = new JButton("Next");
+        next.setFont(new Font("Arial", Font.BOLD, 20));
+        next.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         buttonPanel.add(edit);
         buttonPanel.add(einfach);
         buttonPanel.add(schwer);
         buttonPanel.add(again);
+        buttonPanel.add(next);
 
         ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 80)));
         ergebnisPanel.add(richtig);
@@ -113,17 +97,22 @@ public class Quiz extends JFrame {
         ergebnisPanel.add(buttonPanel);
 
         add(überschriftPanel, BorderLayout.NORTH);
-        add(quizPanel, BorderLayout.CENTER);
+        add(vocabPanel, BorderLayout.CENTER);
         add(ergebnisPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
 
+    public static void main(String[] args) {
+        new Memory();
+    }
+
     public void setRichtig(int r) {
         this.r = r;
+        richtig.setText("Richtig: " + r);
     }
+
     public void setFalsch(int f) {
         this.f = f;
+        falsch.setText("Falsch: " + f);
     }
-
-
 }

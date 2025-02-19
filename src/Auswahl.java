@@ -68,6 +68,8 @@ public class Auswahl extends JFrame {
         vokabelPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
 
         vokButton = new JButton("Spielen");
+        vokButton.setActionCommand("Vocab");
+        vokButton.addActionListener(controller);
         vokButton.setBackground(Color.WHITE);
         vokButton.setPreferredSize(new Dimension(100, 40));
         vokButton.setMaximumSize(new Dimension(100, 40));
@@ -93,6 +95,8 @@ public class Auswahl extends JFrame {
 
         memoryButton = new JButton("Spielen");
         memoryButton.setBackground(Color.WHITE);
+        memoryButton.setActionCommand("Memory");
+        memoryButton.addActionListener(controller);
         memoryButton.setPreferredSize(new Dimension(100, 40));
         memoryButton.setMaximumSize(new Dimension(100, 40));
         memoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
