@@ -58,6 +58,8 @@ public class Home extends JFrame {
         auswahl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         save = new JButton("<html><center>SPEICHERN/<br>BEARBEITEN</center></html>");
+        save.setActionCommand("Save");
+        save.addActionListener(controller);
         save.setFont(new Font("Arial", Font.BOLD, 20));
         save.setBackground(Color.WHITE);
         save.setPreferredSize(new Dimension(400, 100));
