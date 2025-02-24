@@ -1,27 +1,14 @@
-Fragen:
-1. Was bedeutet das englische Wort "house" auf Deutsch?
-2. Wie übersetzt man "Baum" ins Englische?
-3. Was heißt "Auto" auf Englisch?
-4. Welches Synonym gibt es für "happy"?
-5. Was ist das Gegenteil von "big"?
-6. Welches englische Wort ist ein Synonym für "fast"?
-7. Welcher Wortart gehört "quickly" an?
-8. Was ist die Mehrzahl von "child"?
-9. Wie bildet man die Vergangenheitsform von "go"?
-10. Was bedeutet der Ausdruck "How are you?"?
-11. Wie sagt man „Guten Morgen“ auf Englisch?
-12. Was heißt "Danke schön" auf Englisch?
+Was bedeutet das englische Wort "house" auf Deutsch?;Haus
+Wie übersetzt man "Baum" ins Englische?;Tree
+Was heißt "Auto" auf Englisch?;Car
+Welches Synonym gibt es für "happy"?;Glad
+Was ist das Gegenteil von "big"? - small
+Welches englische Wort ist ein Synonym für "fast"?;Quick
+Welcher Wortart gehört "quickly" an?;Adverb
+Was ist die Mehrzahl von "child"?;Children
+Wie bildet man die Vergangenheitsform von "go"?;Went
+Was bedeutet der Ausdruck "How are you?"?;Wie geht es dir?
+Wie sagt man „Guten Morgen“ auf Englisch?;Good morning
+Was heißt "Danke schön" auf Englisch?;Thank you very much
 
-Antworten:
-1. Haus
-2. Tree
-3. Car
-4. Glad, joyful, cheerful
-5. Small, little
-6. Quick, speedy
-7. Adverb
-8. Children
-9. Went
-10. Wie geht es dir?
-11. Good morning
-12. Thank you very much
+

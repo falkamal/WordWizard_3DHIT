@@ -21,23 +21,23 @@ public class Controller implements ActionListener {
             frame.setVisible(false);
             frame = new Auswahl(this);
             frame.setVisible(true);
-        }else if(ac.equals("Beenden")) {
+        } else if(ac.equals("Beenden")) {
             System.exit(0);
-        }else if(ac.equals("Quiz")) {
+        } else if(ac.equals("Quiz")) {
             frame.setVisible(false);
-            frame = new Quiz(this);
+            // Erstelle das QuizModel mit dem Pfad zur Fragen-Datei
+            QuizModel model = new QuizModel("src/QuizFragen.txt");
+            frame = new Quiz(this, model);
             frame.setVisible(true);
-
-        }else if(ac.equals("Vocab")) {
+        } else if(ac.equals("Vocab")) {
             frame.setVisible(false);
             frame = new Vocab();
             frame.setVisible(true);
-
-        }else if(ac.equals("Memory")) {
+        } else if(ac.equals("Memory")) {
             frame.setVisible(false);
             frame = new Memory();
             frame.setVisible(true);
-        }else if(ac.equals("Save")) {
+        } else if(ac.equals("Save")) {
             frame.setVisible(false);
             frame = new SaveEdit(this);
             frame.setVisible(true);
