@@ -42,7 +42,7 @@ public class Controller implements ActionListener {
             frame.setVisible(false);
             frame = new SaveEdit(this);
             frame.setVisible(true);
-        } else if(ac.equals("Pruefe") && frame instanceof Quiz) {
+        } else if((ac.equals("Next") || ac.equals("Pruefe")) && frame instanceof Quiz) {
             ((Quiz) frame).pruefeAntwort();
         }
     }

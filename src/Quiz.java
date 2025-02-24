@@ -70,7 +70,7 @@ public class Quiz extends JFrame {
         frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
 
         antwort = new JTextField();
-        antwort.setFont(new Font("Arial", Font.BOLD, 30));
+        antwort.setFont(new Font("Arial", Font.BOLD, 15));
         antwort.setHorizontalAlignment(SwingConstants.CENTER);
         antwort.setPreferredSize(new Dimension(getWidth() / 3, 150));
         antwort.setMaximumSize(new Dimension(getWidth() / 3, 150));
@@ -107,6 +107,8 @@ public class Quiz extends JFrame {
         einfach = new JButton("Einfach");
         schwer = new JButton("Schwer");
         again = new JButton("Next");
+        again.setActionCommand("Next");
+        again.addActionListener(controller);
 
         edit.setFont(new Font("Arial", Font.BOLD, 20));
         einfach.setFont(new Font("Arial", Font.BOLD, 20));
