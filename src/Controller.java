@@ -4,9 +4,11 @@ import java.awt.event.ActionListener;
 
 public class Controller implements ActionListener {
     private JFrame frame;
+    private QuizModel quizModel;
 
     public Controller() {
         frame = new Home(this);
+        quizModel = new QuizModel("src/QuizFragen.txt");
 
     }
 
@@ -26,8 +28,7 @@ public class Controller implements ActionListener {
         } else if(ac.equals("Quiz")) {
             frame.setVisible(false);
             // Erstelle das QuizModel mit dem Pfad zur Fragen-Datei
-            QuizModel model = new QuizModel("src/QuizFragen.txt");
-            frame = new Quiz(this, model);
+            frame = new Quiz(this, quizModel);
             frame.setVisible(true);
         } else if(ac.equals("Vocab")) {
             frame.setVisible(false);
@@ -41,6 +42,8 @@ public class Controller implements ActionListener {
             frame.setVisible(false);
             frame = new SaveEdit(this);
             frame.setVisible(true);
+        } else if(ac.equals("Pruefe") && frame instanceof Quiz) {
+            ((Quiz) frame).pruefeAntwort();
         }
     }
 

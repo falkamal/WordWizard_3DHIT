@@ -75,6 +75,8 @@ public class Quiz extends JFrame {
         antwort.setPreferredSize(new Dimension(getWidth() / 3, 150));
         antwort.setMaximumSize(new Dimension(getWidth() / 3, 150));
         antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
+        antwort.setActionCommand("Pruefe");
+        antwort.addActionListener(controller);
 
         quizPanel.add(Box.createHorizontalGlue());
         quizPanel.add(frage);
@@ -168,4 +170,23 @@ public class Quiz extends JFrame {
         this.f = f;
         falschLabel.setText("Falsch: " + f);
     }
+    public void pruefeAntwort() {
+        String aktuelleFrage = frage.getText();
+        String userAntwort = antwort.getText().trim();
+
+        // Prüfe die Antwort über das Modell
+        boolean richtigGeantwortet = model.checkAntwort(aktuelleFrage, userAntwort);
+
+        if (richtigGeantwortet) {
+            r++;
+            richtigLabel.setText("Richtig: " + r);
+        } else {
+            f++;
+            falschLabel.setText("Falsch: " + f);
+        }
+
+        // Danach zur nächsten Frage wechseln, falls noch vorhanden
+        zeigeNaechsteFrage();
+    }
+
 }
