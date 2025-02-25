@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 
 public class SaveEdit extends JFrame {
     private DefaultListModel<Question> questionListModel;
@@ -11,6 +11,7 @@ public class SaveEdit extends JFrame {
     private JTextArea questionArea, answerArea;
     private JButton addButton, saveButton;
     private JComboBox<String> modeSelector;
+    private String currentFileName;
 
     public SaveEdit(Controller controller) {
         setTitle("WordWizard - Fragen Editor");
@@ -22,13 +23,14 @@ public class SaveEdit extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu homeMenu = new JMenu("Home");
         JMenuItem homeMenuItem = new JMenuItem("Zur Startseite");
+        homeMenuItem.setActionCommand("Home");
+        homeMenuItem.addActionListener(controller);
         homeMenu.add(homeMenuItem);
         menuBar.add(homeMenu);
         setJMenuBar(menuBar);
 
         // Fragenliste
         questionListModel = new DefaultListModel<>();
-        questionListModel.add(0, new Question("Was istr?", "Ja"));
         questionList = new JList<>(questionListModel);
         questionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         questionList.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -64,7 +66,12 @@ public class SaveEdit extends JFrame {
         controlPanel.setLayout(new FlowLayout());
 
         saveButton = new JButton("Frage Speichern");
-        saveButton.addActionListener(controller);
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveQuestionsToFile();
+            }
+        });
 
         addButton = new JButton("Frage hinzufügen");
         addButton.addActionListener(new ActionListener() {
@@ -76,6 +83,12 @@ public class SaveEdit extends JFrame {
 
         String[] modes = {"Quiz", "Vokabel", "Memory"};
         modeSelector = new JComboBox<>(modes);
+        modeSelector.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateFileName();
+            }
+        });
 
         controlPanel.add(new JLabel("Spielmodus:"));
         controlPanel.add(modeSelector);
@@ -89,6 +102,56 @@ public class SaveEdit extends JFrame {
         add(splitPane, BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);
         setVisible(true);
+
+        // Initiales Laden der Fragen
+        updateFileName();
+        loadQuestionsFromFile();
+    }
+
+    private void updateFileName() {
+        String selectedMode = (String) modeSelector.getSelectedItem();
+        switch (selectedMode) {
+            case "Quiz":
+                currentFileName = "QuizFragen.txt";
+                break;
+            case "Vokabel":
+                currentFileName = "VokabelFragen.txt";
+                break;
+            case "Memory":
+                currentFileName = "MemoryFragen.txt";
+                break;
+            default:
+                currentFileName = "QuizFragen.txt";
+        }
+        loadQuestionsFromFile();
+    }
+
+    private void loadQuestionsFromFile() {
+        questionListModel.clear();
+        try (BufferedReader br = new BufferedReader(new FileReader(currentFileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String questionText = line.trim();
+                String answerText = br.readLine().trim();
+                questionListModel.addElement(new Question(questionText, answerText));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveQuestionsToFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(currentFileName))) {
+            for (int i = 0; i < questionListModel.size(); i++) {
+                Question q = questionListModel.get(i);
+                bw.write(q.getQuestion() + "\n");
+                bw.write(q.getAnswer() + "\n");
+            }
+            JOptionPane.showMessageDialog(this, "Fragen erfolgreich gespeichert!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Fehler beim Speichern der Fragen!", "Fehler", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     private void showSelectedQuestion() {

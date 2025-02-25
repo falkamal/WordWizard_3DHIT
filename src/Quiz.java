@@ -15,7 +15,7 @@ public class Quiz extends JFrame {
     private JTextField frage;
     private JTextField antwort;
     private JLabel richtigLabel, falschLabel;
-    private JButton edit, einfach, schwer, again;
+    private JButton edit, again;
     private Controller controller;
     private QuizModel model;
     private List<String> fragenListe;
@@ -104,15 +104,13 @@ public class Quiz extends JFrame {
         buttonPanel.setBackground(Color.decode("#C6E2FF"));
 
         edit = new JButton("Edit");
-        einfach = new JButton("Einfach");
-        schwer = new JButton("Schwer");
+        edit.setActionCommand("Save");
+        edit.addActionListener(controller);
         again = new JButton("Next");
         again.setActionCommand("Next");
         again.addActionListener(controller);
 
         edit.setFont(new Font("Arial", Font.BOLD, 20));
-        einfach.setFont(new Font("Arial", Font.BOLD, 20));
-        schwer.setFont(new Font("Arial", Font.BOLD, 20));
         again.setFont(new Font("Arial", Font.BOLD, 20));
 
         again.addActionListener(new ActionListener() {
@@ -123,8 +121,6 @@ public class Quiz extends JFrame {
         });
 
         buttonPanel.add(edit);
-        buttonPanel.add(einfach);
-        buttonPanel.add(schwer);
         buttonPanel.add(again);
 
         ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 80)));

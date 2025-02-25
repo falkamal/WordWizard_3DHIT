@@ -3,18 +3,21 @@ import java.awt.*;
 
 public class Vocab extends JFrame {
 
+    private Controller controller;
     private JMenuBar menuBar;
     private JMenu homeMenu;
+    private JMenuItem homeMenuItem;
     private JPanel überschriftPanel, vocabPanel, ergebnisPanel, buttonPanel;
     private JTextField englisch = new JTextField("English Word");
     private JTextField deutsch = new JTextField();
     private JTextField eingabeFeld = new JTextField();
 
     private JLabel wortLabel, richtig, falsch;
-    private JButton edit, einfach, schwer, again;
+    private JButton edit, again;
     private int r = 0, f = 0;
 
-    public Vocab() {
+    public Vocab(Controller controller) {
+        this.controller = controller;
         setTitle("WordWizard - Vokabeltest");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
@@ -25,6 +28,11 @@ public class Vocab extends JFrame {
         menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
+
+        homeMenuItem = new JMenuItem("Zur Startseite");
+        homeMenuItem.setActionCommand("Home");
+        homeMenuItem.addActionListener(controller);
+        homeMenu.add(homeMenuItem);
         menuBar.add(homeMenu);
         setJMenuBar(menuBar);
 
@@ -72,24 +80,16 @@ public class Vocab extends JFrame {
         buttonPanel.setBackground(Color.decode("#C6E2FF"));
 
         edit = new JButton("Edit");
+        edit.setActionCommand("Save");
+        edit.addActionListener(controller);
         edit.setFont(new Font("Arial", Font.BOLD, 20));
         edit.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        einfach = new JButton("Einfach");
-        einfach.setFont(new Font("Arial", Font.BOLD, 20));
-        einfach.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        schwer = new JButton("Schwer");
-        schwer.setFont(new Font("Arial", Font.BOLD, 20));
-        schwer.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         again = new JButton("Again");
         again.setFont(new Font("Arial", Font.BOLD, 20));
         again.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         buttonPanel.add(edit);
-        buttonPanel.add(einfach);
-        buttonPanel.add(schwer);
         buttonPanel.add(again);
 
         ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 80)));
@@ -102,10 +102,6 @@ public class Vocab extends JFrame {
         add(vocabPanel, BorderLayout.CENTER);
         add(ergebnisPanel, BorderLayout.SOUTH);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        Vocab vocabTest = new Vocab();
     }
 
     public void setRichtig(int r) {

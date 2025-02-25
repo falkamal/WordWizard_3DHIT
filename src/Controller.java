@@ -8,7 +8,7 @@ public class Controller implements ActionListener {
 
     public Controller() {
         frame = new Home(this);
-        quizModel = new QuizModel("src/QuizFragen.txt");
+        quizModel = new QuizModel("./QuizFragen.txt");
 
     }
 
@@ -32,11 +32,11 @@ public class Controller implements ActionListener {
             frame.setVisible(true);
         } else if(ac.equals("Vocab")) {
             frame.setVisible(false);
-            frame = new Vocab();
+            frame = new Vocab(this);
             frame.setVisible(true);
         } else if(ac.equals("Memory")) {
             frame.setVisible(false);
-            frame = new Memory();
+            frame = new Memory(this);
             frame.setVisible(true);
         } else if(ac.equals("Save")) {
             frame.setVisible(false);
