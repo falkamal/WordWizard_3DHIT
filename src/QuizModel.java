@@ -36,9 +36,12 @@ public class QuizModel {
 
     public void frageHinzufuegen(String frage, String antwort) {
         fragenAntworten.put(frage, antwort);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dateipfad))) {
-            bw.write(frage + ";" + antwort);
-            bw.newLine();
+        // Datei mit den neuen Fragen und Antworten überschreiben
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dateipfad, false))) { // false = Überschreiben
+            for (Map.Entry<String, String> entry : fragenAntworten.entrySet()) {
+                bw.write(entry.getKey() + ";" + entry.getValue());
+                bw.newLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,6 +71,7 @@ public class QuizModel {
         String korrekteAntwort = fragenAntworten.get(frage);
         return korrekteAntwort != null && korrekteAntwort.equalsIgnoreCase(userAntwort.trim());
     }
+
     public Map<String, String> getFragenAntworten() {
         return fragenAntworten;
     }

@@ -5,11 +5,12 @@ import java.awt.event.ActionListener;
 public class Controller implements ActionListener {
     private JFrame frame;
     private QuizModel quizModel;
+    private VocabModel vocabModel;
 
     public Controller() {
         frame = new Home(this);
         quizModel = new QuizModel("./QuizFragen.txt");
-
+        vocabModel = new VocabModel("./VokabelFragen.txt");
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Controller implements ActionListener {
             frame.setVisible(true);
         } else if(ac.equals("Vocab")) {
             frame.setVisible(false);
-            frame = new Vocab(this);
+            frame = new Vocab(this, vocabModel);
             frame.setVisible(true);
         } else if(ac.equals("Memory")) {
             frame.setVisible(false);

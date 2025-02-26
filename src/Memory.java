@@ -21,6 +21,7 @@ public class Memory extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Menüleiste
         menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(getWidth(), 50));
         homeMenu = new JMenu("Home");
@@ -31,16 +32,18 @@ public class Memory extends JFrame {
         menuBar.add(homeMenu);
         setJMenuBar(menuBar);
 
+        // Überschrift Panel
         überschriftPanel = new JPanel();
-        überschriftPanel.setBackground(Color.WHITE);
+        überschriftPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila
         JLabel überschrift = new JLabel("Vokabeltest-Modus");
         überschrift.setFont(new Font("Arial", Font.BOLD, 30));
+        überschrift.setForeground(Color.WHITE); // Weiße Schrift für den Titel
         überschriftPanel.add(überschrift);
 
-        // Vokabelkarten
+        // Vokabelkarten Panel
         vocabPanel = new JPanel();
         vocabPanel.setLayout(new GridLayout(3, 2, 20, 20));
-        vocabPanel.setBackground(Color.decode("#C6E2FF"));
+        vocabPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila
 
         for (int i = 0; i < 6; i++) {
             JPanel card = new JPanel();
@@ -55,32 +58,36 @@ public class Memory extends JFrame {
             vocabPanel.add(card);
         }
 
-        // Ergebnisse
+        // Ergebnis Panel
         ergebnisPanel = new JPanel();
         ergebnisPanel.setLayout(new BoxLayout(ergebnisPanel, BoxLayout.Y_AXIS));
-        ergebnisPanel.setBackground(Color.decode("#C6E2FF"));
+        ergebnisPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila
 
         richtig = new JLabel("Richtig: " + r);
         richtig.setFont(new Font("Arial", Font.BOLD, 20));
+        richtig.setForeground(Color.WHITE); // Weiße Schrift
         richtig.setAlignmentX(Component.CENTER_ALIGNMENT);
         falsch = new JLabel("Falsch: " + f);
         falsch.setFont(new Font("Arial", Font.BOLD, 20));
+        falsch.setForeground(Color.WHITE); // Weiße Schrift
         falsch.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Button Panel
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.decode("#C6E2FF"));
+        buttonPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila
 
         edit = new JButton("Edit");
         edit.setActionCommand("Save");
         edit.addActionListener(controller);
         edit.setFont(new Font("Arial", Font.BOLD, 20));
-        edit.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+        edit.setBackground(Color.decode("#4B0082")); // Lila Button Hintergrund
+        edit.setForeground(Color.WHITE); // Weiße Schrift
 
         next = new JButton("Next");
         next.setFont(new Font("Arial", Font.BOLD, 20));
-        next.setAlignmentX(Component.CENTER_ALIGNMENT);
+        next.setBackground(Color.decode("#4B0082")); // Lila Button Hintergrund
+        next.setForeground(Color.WHITE); // Weiße Schrift
 
         buttonPanel.add(edit);
         buttonPanel.add(next);

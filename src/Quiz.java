@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Quiz extends JFrame {
 
@@ -50,15 +49,16 @@ public class Quiz extends JFrame {
         setJMenuBar(menuBar);
 
         überschriftPanel = new JPanel();
-        überschriftPanel.setBackground(Color.WHITE);
+        überschriftPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Überschrift-Panel
         JLabel überschrift = new JLabel("Quiz-Modus");
         überschrift.setFont(new Font("Arial", Font.BOLD, 30));
+        überschrift.setForeground(Color.WHITE); // Weiße Schrift auf dunklem Hintergrund
         überschriftPanel.add(überschrift);
 
         // Eingabefelder
         quizPanel = new JPanel();
         quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.X_AXIS));
-        quizPanel.setBackground(Color.decode("#C6E2FF"));
+        quizPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Quiz Panel
 
         frage = new JTextField();
         frage.setEditable(false);
@@ -67,14 +67,14 @@ public class Quiz extends JFrame {
         frage.setHorizontalAlignment(SwingConstants.CENTER);
         frage.setPreferredSize(new Dimension(getWidth() / 3, 150));
         frage.setMaximumSize(new Dimension(getWidth() / 3, 150));
-        frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
+        frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1)); // Dunkles Lila für den Rand
 
         antwort = new JTextField();
         antwort.setFont(new Font("Arial", Font.BOLD, 15));
         antwort.setHorizontalAlignment(SwingConstants.CENTER);
         antwort.setPreferredSize(new Dimension(getWidth() / 3, 150));
         antwort.setMaximumSize(new Dimension(getWidth() / 3, 150));
-        antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2F4F4F"), 1));
+        antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1));
         antwort.setActionCommand("Pruefe");
         antwort.addActionListener(controller);
 
@@ -87,21 +87,23 @@ public class Quiz extends JFrame {
         // Ergebnis
         ergebnisPanel = new JPanel();
         ergebnisPanel.setLayout(new BoxLayout(ergebnisPanel, BoxLayout.Y_AXIS));
-        ergebnisPanel.setBackground(Color.decode("#C6E2FF"));
+        ergebnisPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Ergebnis-Panel
         ergebnisPanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 2));
         ergebnisPanel.setMinimumSize(new Dimension(getWidth(), getHeight() / 2));
 
         richtigLabel = new JLabel("Richtig: " + r);
         richtigLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        richtigLabel.setForeground(Color.WHITE); // Weiße Schrift für "Richtig"
         richtigLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         falschLabel = new JLabel("Falsch: " + f);
         falschLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        falschLabel.setForeground(Color.WHITE); // Weiße Schrift für "Falsch"
         falschLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Button-Panel
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.decode("#C6E2FF"));
+        buttonPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Button-Panel
 
         edit = new JButton("Edit");
         edit.setActionCommand("Save");
@@ -134,7 +136,12 @@ public class Quiz extends JFrame {
         add(ergebnisPanel, BorderLayout.SOUTH);
 
         // Erste Frage setzen
-        zeigeNaechsteFrage();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                zeigeNaechsteFrage();
+            }
+        });
 
         setVisible(true);
     }
@@ -158,7 +165,6 @@ public class Quiz extends JFrame {
         }
     }
 
-
     public void setRichtig(int r) {
         this.r = r;
         richtigLabel.setText("Richtig: " + r);
@@ -168,6 +174,7 @@ public class Quiz extends JFrame {
         this.f = f;
         falschLabel.setText("Falsch: " + f);
     }
+
     public void pruefeAntwort() {
         String aktuelleFrage = frage.getText();
         String userAntwort = antwort.getText().trim();
@@ -186,5 +193,4 @@ public class Quiz extends JFrame {
         // Danach zur nächsten Frage wechseln, falls noch vorhanden
         zeigeNaechsteFrage();
     }
-
 }
