@@ -37,7 +37,7 @@ public class QuizModel {
     public void frageHinzufuegen(String frage, String antwort) {
         fragenAntworten.put(frage, antwort);
         // Datei mit den neuen Fragen und Antworten überschreiben
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dateipfad, false))) { // false = Überschreiben
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(dateipfad))) {
             for (Map.Entry<String, String> entry : fragenAntworten.entrySet()) {
                 bw.write(entry.getKey() + ";" + entry.getValue());
                 bw.newLine();
@@ -47,32 +47,16 @@ public class QuizModel {
         }
     }
 
-    public String getAntwort(String frage) {
-        return fragenAntworten.get(frage);
-    }
-
-    public int getRichtig() {
-        return richtig;
-    }
-
-    public void increaseRichtig() {
-        this.richtig++;
-    }
-
-    public int getFalsch() {
-        return falsch;
-    }
-
-    public void increaseFalsch() {
-        this.falsch++;
-    }
-
-    public boolean checkAntwort(String frage, String userAntwort) {
-        String korrekteAntwort = fragenAntworten.get(frage);
-        return korrekteAntwort != null && korrekteAntwort.equalsIgnoreCase(userAntwort.trim());
-    }
-
     public Map<String, String> getFragenAntworten() {
         return fragenAntworten;
+    }
+
+    public boolean checkAntwort(String frage, String antwort) {
+        String korrekteAntwort = fragenAntworten.get(frage);
+        return korrekteAntwort != null && korrekteAntwort.equalsIgnoreCase(antwort.trim());
+    }
+
+    public String getAntwort(String frage) {
+        return fragenAntworten.get(frage);
     }
 }

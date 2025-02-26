@@ -28,7 +28,6 @@ public class Controller implements ActionListener {
             System.exit(0);
         } else if(ac.equals("Quiz")) {
             frame.setVisible(false);
-            // Erstelle das QuizModel mit dem Pfad zur Fragen-Datei
             frame = new Quiz(this, quizModel);
             frame.setVisible(true);
         } else if(ac.equals("Vocab")) {

@@ -35,7 +35,7 @@ public class Memory extends JFrame {
         // Überschrift Panel
         überschriftPanel = new JPanel();
         überschriftPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila
-        JLabel überschrift = new JLabel("Vokabeltest-Modus");
+        JLabel überschrift = new JLabel("Memory-Modus");
         überschrift.setFont(new Font("Arial", Font.BOLD, 30));
         überschrift.setForeground(Color.WHITE); // Weiße Schrift für den Titel
         überschriftPanel.add(überschrift);

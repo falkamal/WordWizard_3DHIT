@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Quiz extends JFrame {
 
@@ -17,15 +15,12 @@ public class Quiz extends JFrame {
     private JButton edit, again;
     private Controller controller;
     private QuizModel model;
-    private List<String> fragenListe;
     private int aktuelleFrageIndex;
     private int r = 0, f = 0;
 
     public Quiz(Controller controller, QuizModel model) {
         this.controller = controller;
         this.model = model;
-        this.fragenListe = new ArrayList<>(model.getFragenAntworten().keySet());
-        System.out.println("Geladene Fragenanzahl: " + fragenListe.size());
         this.aktuelleFrageIndex = 0; // Startet bei der ersten Frage
 
         setTitle("WordWizard");
@@ -115,13 +110,6 @@ public class Quiz extends JFrame {
         edit.setFont(new Font("Arial", Font.BOLD, 20));
         again.setFont(new Font("Arial", Font.BOLD, 20));
 
-        again.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                zeigeNaechsteFrage();
-            }
-        });
-
         buttonPanel.add(edit);
         buttonPanel.add(again);
 
@@ -147,50 +135,38 @@ public class Quiz extends JFrame {
     }
 
     private void zeigeNaechsteFrage() {
-        if (fragenListe.isEmpty()) {
-            frage.setText("Keine Fragen verfügbar.");
-            return;
-        }
-
-        // Wenn es noch unbeantwortete Fragen gibt, zeige die nächste an
-        if (aktuelleFrageIndex < fragenListe.size()) {
-            String naechsteFrage = fragenListe.get(aktuelleFrageIndex);
+        // Hole alle Fragen aus dem Modell und zeige die nächste an
+        if (aktuelleFrageIndex < model.getFragenAntworten().size()) {
+            String[] fragenArray = model.getFragenAntworten().keySet().toArray(new String[0]);
+            String naechsteFrage = fragenArray[aktuelleFrageIndex];
             frage.setText(naechsteFrage);
             antwort.setText(""); // Antwortfeld leeren
             aktuelleFrageIndex++;
         } else {
-            // Alle Fragen wurden durchgegangen
             frage.setText("Quiz beendet.");
-            antwort.setEnabled(false); // oder eine andere Logik, um das Quiz zu beenden
+            antwort.setEnabled(false); // Quiz beenden
         }
-    }
-
-    public void setRichtig(int r) {
-        this.r = r;
-        richtigLabel.setText("Richtig: " + r);
-    }
-
-    public void setFalsch(int f) {
-        this.f = f;
-        falschLabel.setText("Falsch: " + f);
     }
 
     public void pruefeAntwort() {
         String aktuelleFrage = frage.getText();
         String userAntwort = antwort.getText().trim();
 
-        // Prüfe die Antwort über das Modell
+        // Überprüfe die Antwort
         boolean richtigGeantwortet = model.checkAntwort(aktuelleFrage, userAntwort);
 
         if (richtigGeantwortet) {
             r++;
             richtigLabel.setText("Richtig: " + r);
+            JOptionPane.showMessageDialog(this, "Richtige Antwort!", "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
         } else {
             f++;
             falschLabel.setText("Falsch: " + f);
+            String richtigeAntwort = model.getAntwort(aktuelleFrage);
+            JOptionPane.showMessageDialog(this, "Falsche Antwort! Die richtige Antwort ist: " + richtigeAntwort, "Ergebnis", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Danach zur nächsten Frage wechseln, falls noch vorhanden
+        // Gehe zur nächsten Frage
         zeigeNaechsteFrage();
     }
 }
