@@ -9,4 +9,4 @@ Wie bildet man die Vergangenheitsform von "go"?;Went
 Was bedeutet der Ausdruck "How are you?"?;Wie geht es dir?
 Wie sagt man „Guten Morgen“ auf Englisch?;Good morning
 Was heißt "Danke schön" auf Englisch?;Thank you very much
-
+Wie heißt "klug" auf Englisch?;Smart
