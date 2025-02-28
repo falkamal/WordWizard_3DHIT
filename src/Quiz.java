@@ -1,3 +1,4 @@
+// Importieren von notwendigen Bibliotheken für die GUI-Entwicklung und Event-Handling
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,168 +6,179 @@ import java.awt.event.ActionListener;
 
 public class Quiz extends JFrame {
 
-    private JMenuBar menuBar;
-    private JMenu homeMenu;
-    private JMenuItem homeMenuItem;
+    // Deklaration der GUI-Komponenten
+    private JMenuBar menuBar;           // Menüleiste für die Anwendung
+    private JMenu homeMenu;             // Menü für Home-Option
+    private JMenuItem homeMenuItem;     // Menüpunkt für Home
     private JPanel überschriftPanel, quizPanel, ergebnisPanel, buttonPanel;
-    private JTextField frage;
-    private JTextField antwort;
-    private JLabel richtigLabel, falschLabel;
-    private JButton edit, again;
-    private Controller controller;
-    private QuizModel model;
-    private int aktuelleFrageIndex;
-    private int r = 0, f = 0;
+    private JTextField frage;           // Eingabefeld für die Frage
+    private JTextField antwort;         // Eingabefeld für die Antwort des Nutzers
+    private JLabel richtigLabel, falschLabel; // Labels zur Anzeige der Anzahl richtiger und falscher Antworten
+    private JButton edit, again;        // Buttons für Editieren und zum nächsten Frage
+    private Controller controller;      // Steuerung der Benutzerinteraktionen
+    private QuizModel model;            // Modell, das die Fragen und Antworten enthält
+    private int aktuelleFrageIndex;     // Index der aktuellen Frage
+    private int r = 0, f = 0;           // Zähler für richtige und falsche Antworten
 
+    // Konstruktor der Quiz-Klasse
     public Quiz(Controller controller, QuizModel model) {
-        this.controller = controller;
-        this.model = model;
-        this.aktuelleFrageIndex = 0; // Startet bei der ersten Frage
+        this.controller = controller;   // Initialisierung des Controllers
+        this.model = model;             // Initialisierung des Modells
+        this.aktuelleFrageIndex = 0;    // Start bei der ersten Frage
 
+        // Festlegen des Fenstertitels und der Größe
         setTitle("WordWizard");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setExtendedState(JFrame.MAXIMIZED_BOTH);  // Maximiert das Fenster
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Beendet das Programm, wenn das Fenster geschlossen wird
+        setLayout(new BorderLayout()); // Setzt das Layout auf BorderLayout
 
-        // Menü
+        // Erstellung der Menüleiste
         menuBar = new JMenuBar();
-        menuBar.setPreferredSize(new Dimension(getWidth(), 50));
+        menuBar.setPreferredSize(new Dimension(getWidth(), 50)); // Größe der Menüleiste festlegen
         homeMenu = new JMenu("Home");
 
+        // Menüpunkt für die Startseite
         homeMenuItem = new JMenuItem("Zur Startseite");
-        homeMenuItem.setActionCommand("Home");
-        homeMenuItem.addActionListener(controller);
-        homeMenu.add(homeMenuItem);
+        homeMenuItem.setActionCommand("Home"); // Setzt den ActionCommand
+        homeMenuItem.addActionListener(controller); // Verknüpft den ActionListener mit dem Controller
+        homeMenu.add(homeMenuItem); // Fügt den Menüpunkt zum Menü hinzu
 
-        menuBar.add(homeMenu);
-        setJMenuBar(menuBar);
+        menuBar.add(homeMenu); // Fügt das Menü zur Menüleiste hinzu
+        setJMenuBar(menuBar); // Setzt die Menüleiste für das Fenster
 
+        // Panel für die Überschrift
         überschriftPanel = new JPanel();
-        überschriftPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Überschrift-Panel
+        überschriftPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila als Hintergrundfarbe
         JLabel überschrift = new JLabel("Quiz-Modus");
-        überschrift.setFont(new Font("Arial", Font.BOLD, 30));
-        überschrift.setForeground(Color.WHITE); // Weiße Schrift auf dunklem Hintergrund
-        überschriftPanel.add(überschrift);
+        überschrift.setFont(new Font("Arial", Font.BOLD, 30));  // Schriftart und Größe der Überschrift
+        überschrift.setForeground(Color.WHITE); // Weiße Schriftfarbe
+        überschriftPanel.add(überschrift); // Überschrift zum Panel hinzufügen
 
-        // Eingabefelder
+        // Panel für die Fragen und Antworten
         quizPanel = new JPanel();
-        quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.X_AXIS));
-        quizPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Quiz Panel
+        quizPanel.setLayout(new BoxLayout(quizPanel, BoxLayout.X_AXIS)); // Setzt das Layout auf eine horizontale Ausrichtung
+        quizPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Quiz-Panel
 
+        // Fragefeld
         frage = new JTextField();
-        frage.setEditable(false);
-        frage.setBackground(Color.WHITE);
-        frage.setFont(new Font("Arial", Font.BOLD, 15));
-        frage.setHorizontalAlignment(SwingConstants.CENTER);
-        frage.setPreferredSize(new Dimension(getWidth() / 3, 150));
-        frage.setMaximumSize(new Dimension(getWidth() / 3, 150));
-        frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1)); // Dunkles Lila für den Rand
+        frage.setEditable(false); // Das Fragefeld ist nur lesbar
+        frage.setBackground(Color.WHITE); // Hintergrund weiß
+        frage.setFont(new Font("Arial", Font.BOLD, 15)); // Schriftart und Größe
+        frage.setHorizontalAlignment(SwingConstants.CENTER); // Text zentrieren
+        frage.setPreferredSize(new Dimension(getWidth() / 3, 150)); // Größe des Textfeldes
+        frage.setMaximumSize(new Dimension(getWidth() / 3, 150)); // Maximale Größe
+        frage.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1)); // Randfarbe
 
+        // Antwortfeld
         antwort = new JTextField();
-        antwort.setFont(new Font("Arial", Font.BOLD, 15));
-        antwort.setHorizontalAlignment(SwingConstants.CENTER);
-        antwort.setPreferredSize(new Dimension(getWidth() / 3, 150));
-        antwort.setMaximumSize(new Dimension(getWidth() / 3, 150));
-        antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1));
-        antwort.setActionCommand("Pruefe");
-        antwort.addActionListener(controller);
+        antwort.setFont(new Font("Arial", Font.BOLD, 15)); // Schriftart und Größe
+        antwort.setHorizontalAlignment(SwingConstants.CENTER); // Text zentrieren
+        antwort.setPreferredSize(new Dimension(getWidth() / 3, 150)); // Größe des Antwortfeldes
+        antwort.setMaximumSize(new Dimension(getWidth() / 3, 150)); // Maximale Größe
+        antwort.setBorder(BorderFactory.createLineBorder(Color.decode("#2E003E"), 1)); // Randfarbe
+        antwort.setActionCommand("Pruefe"); // Setzt den ActionCommand für das Überprüfen der Antwort
+        antwort.addActionListener(controller); // Verknüpft den ActionListener mit dem Controller
 
-        quizPanel.add(Box.createHorizontalGlue());
-        quizPanel.add(frage);
-        quizPanel.add(Box.createRigidArea(new Dimension(80, 0)));
-        quizPanel.add(antwort);
-        quizPanel.add(Box.createHorizontalGlue());
+        quizPanel.add(Box.createHorizontalGlue()); // Fügt einen horizontalen Abstand hinzu
+        quizPanel.add(frage);  // Fügt das Fragefeld hinzu
+        quizPanel.add(Box.createRigidArea(new Dimension(80, 0))); // Fügt einen festen Abstand zwischen den Feldern hinzu
+        quizPanel.add(antwort);  // Fügt das Antwortfeld hinzu
+        quizPanel.add(Box.createHorizontalGlue()); // Fügt einen weiteren horizontalen Abstand hinzu
 
-        // Ergebnis
+        // Panel für die Ergebnisse (richtige und falsche Antworten)
         ergebnisPanel = new JPanel();
-        ergebnisPanel.setLayout(new BoxLayout(ergebnisPanel, BoxLayout.Y_AXIS));
-        ergebnisPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Ergebnis-Panel
-        ergebnisPanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 2));
-        ergebnisPanel.setMinimumSize(new Dimension(getWidth(), getHeight() / 2));
+        ergebnisPanel.setLayout(new BoxLayout(ergebnisPanel, BoxLayout.Y_AXIS)); // Vertikale Ausrichtung der Komponenten
+        ergebnisPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila als Hintergrundfarbe
+        ergebnisPanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 2)); // Größe des Panels
+        ergebnisPanel.setMinimumSize(new Dimension(getWidth(), getHeight() / 2)); // Mindestgröße des Panels
 
-        richtigLabel = new JLabel("Richtig: " + r);
-        richtigLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        richtigLabel.setForeground(Color.WHITE); // Weiße Schrift für "Richtig"
-        richtigLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        falschLabel = new JLabel("Falsch: " + f);
-        falschLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        falschLabel.setForeground(Color.WHITE); // Weiße Schrift für "Falsch"
-        falschLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        richtigLabel = new JLabel("Richtig: " + r); // Label für die Anzahl der richtigen Antworten
+        richtigLabel.setFont(new Font("Arial", Font.BOLD, 20)); // Schriftart und Größe
+        richtigLabel.setForeground(Color.WHITE); // Weiße Schriftfarbe
+        richtigLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Zentriert das Label
+        falschLabel = new JLabel("Falsch: " + f); // Label für die Anzahl der falschen Antworten
+        falschLabel.setFont(new Font("Arial", Font.BOLD, 20)); // Schriftart und Größe
+        falschLabel.setForeground(Color.WHITE); // Weiße Schriftfarbe
+        falschLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Zentriert das Label
 
         // Button-Panel
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila für das Button-Panel
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS)); // Horizontale Anordnung der Buttons
+        buttonPanel.setBackground(Color.decode("#2E003E")); // Dunkles Lila als Hintergrundfarbe
 
+        // Buttons für Editieren und zum nächsten Frage
         edit = new JButton("Edit");
-        edit.setActionCommand("Save");
-        edit.addActionListener(controller);
+        edit.setActionCommand("Save"); // ActionCommand für den Edit-Button
+        edit.addActionListener(controller); // Verknüpft den ActionListener mit dem Controller
         again = new JButton("Next");
-        again.setActionCommand("Next");
-        again.addActionListener(controller);
+        again.setActionCommand("Next"); // ActionCommand für den Next-Button
+        again.addActionListener(controller); // Verknüpft den ActionListener mit dem Controller
 
-        edit.setFont(new Font("Arial", Font.BOLD, 20));
-        again.setFont(new Font("Arial", Font.BOLD, 20));
+        edit.setFont(new Font("Arial", Font.BOLD, 20)); // Schriftart und Größe
+        again.setFont(new Font("Arial", Font.BOLD, 20)); // Schriftart und Größe
 
-        buttonPanel.add(edit);
-        buttonPanel.add(again);
+        buttonPanel.add(edit); // Fügt den Edit-Button hinzu
+        buttonPanel.add(again); // Fügt den Next-Button hinzu
 
-        ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 80)));
-        ergebnisPanel.add(richtigLabel);
-        ergebnisPanel.add(falschLabel);
-        ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 40)));
-        ergebnisPanel.add(buttonPanel);
+        // Hinzufügen der Labels und Buttons zum Ergebnis-Panel
+        ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 80))); // Fügt Abstand hinzu
+        ergebnisPanel.add(richtigLabel); // Fügt das Label für richtige Antworten hinzu
+        ergebnisPanel.add(falschLabel); // Fügt das Label für falsche Antworten hinzu
+        ergebnisPanel.add(Box.createRigidArea(new Dimension(0, 40))); // Fügt Abstand hinzu
+        ergebnisPanel.add(buttonPanel); // Fügt das Button-Panel hinzu
 
+        // Hinzufügen der Panels zum Hauptfenster
         add(überschriftPanel, BorderLayout.NORTH);
         add(quizPanel, BorderLayout.CENTER);
         add(ergebnisPanel, BorderLayout.SOUTH);
 
-        // Erste Frage setzen
+        // Setzt die erste Frage
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                zeigeNaechsteFrage();
+                zeigeNaechsteFrage(); // Zeigt die erste Frage an
             }
         });
 
-        setVisible(true);
+        setVisible(true); // Macht das Fenster sichtbar
     }
 
+    // Methode zum Anzeigen der nächsten Frage
     private void zeigeNaechsteFrage() {
-        // Hole alle Fragen aus dem Modell und zeige die nächste an
         if (aktuelleFrageIndex < model.getFragenAntworten().size()) {
             String[] fragenArray = model.getFragenAntworten().keySet().toArray(new String[0]);
-            String naechsteFrage = fragenArray[aktuelleFrageIndex];
-            frage.setText(naechsteFrage);
+            String naechsteFrage = fragenArray[aktuelleFrageIndex]; // Nächste Frage holen
+            frage.setText(naechsteFrage); // Frage ins Textfeld setzen
             antwort.setText(""); // Antwortfeld leeren
-            aktuelleFrageIndex++;
+            aktuelleFrageIndex++; // Index für die nächste Frage erhöhen
         } else {
-            frage.setText("Quiz beendet.");
-            antwort.setEnabled(false); // Quiz beenden
+            frage.setText("Quiz beendet."); // Anzeige wenn das Quiz beendet ist
+            antwort.setEnabled(false); // Deaktiviert das Antwortfeld
         }
     }
 
+    // Methode zum Überprüfen der Antwort
     public void pruefeAntwort() {
         String aktuelleFrage = frage.getText();
-        String userAntwort = antwort.getText().trim();
+        String userAntwort = antwort.getText().trim(); // Trim entfernt führende und nachfolgende Leerzeichen
 
-        // Überprüfe die Antwort
+        // Antwortüberprüfung
         boolean richtigGeantwortet = model.checkAntwort(aktuelleFrage, userAntwort);
 
         if (richtigGeantwortet) {
-            r++;
-            richtigLabel.setText("Richtig: " + r);
-            JOptionPane.showMessageDialog(this, "Richtige Antwort!", "Ergebnis", JOptionPane.INFORMATION_MESSAGE);
+            r++; // Erhöhe die Anzahl richtiger Antworten
+            richtigLabel.setText("Richtig: " + r); // Aktualisiere das Label für richtige Antworten
+            JOptionPane.showMessageDialog(this, "Richtige Antwort!", "Ergebnis", JOptionPane.INFORMATION_MESSAGE); // Anzeige einer Nachricht bei richtiger Antwort
         } else {
-            f++;
-            falschLabel.setText("Falsch: " + f);
-            String richtigeAntwort = model.getAntwort(aktuelleFrage);
-            JOptionPane.showMessageDialog(this, "Falsche Antwort! Die richtige Antwort ist: " + richtigeAntwort, "Ergebnis", JOptionPane.ERROR_MESSAGE);
+            f++; // Erhöhe die Anzahl falscher Antworten
+            falschLabel.setText("Falsch: " + f); // Aktualisiere das Label für falsche Antworten
+            String richtigeAntwort = model.getAntwort(aktuelleFrage); // Hole die richtige Antwort
+            JOptionPane.showMessageDialog(this, "Falsche Antwort! Die richtige Antwort ist: " + richtigeAntwort, "Ergebnis", JOptionPane.ERROR_MESSAGE); // Anzeige einer Nachricht bei falscher Antwort
         }
 
-        // Gehe zur nächsten Frage
+        // Nächste Frage anzeigen
         zeigeNaechsteFrage();
     }
 }
